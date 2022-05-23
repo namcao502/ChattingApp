@@ -1,0 +1,7 @@
+
+
+Cần đồng bộ tin nhắn khi trong chatRoom
+
+Focus vào item cuối của recycler view tin nhắn
+
+không cho tạo room trùng

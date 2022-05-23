@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.ChatsFragment">
+
+    <LinearLayout
+        android:id="@+id/fragment_chats_home_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/fragment_chats_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/fragment_chats_circleImageViewAvatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/icons8_user_50" />
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:text="Chats"
+                    android:textAlignment="center"
+                    android:textSize="25sp" />
+
+                <ImageButton
+                    android:id="@+id/fragment_chats_ImageButtonEdit"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/icons8_edit_50" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </LinearLayout>
+
+<!--        <EditText-->
+
+<!--            android:drawableStart="@drawable/icons8_search_64"-->
+<!--            android:padding="10dp"-->
+<!--            android:textSize="25sp"-->
+<!--            android:hint="Search"-->
+<!--            android:background="@drawable/corner_edit_text_background"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="70dp"/>-->
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/fragment_chats_recyclerView_listUser"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:padding="10dp" />-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:id="@+id/fragment_chats_recyclerView_listChats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

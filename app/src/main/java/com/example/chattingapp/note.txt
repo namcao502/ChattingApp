@@ -1,6 +1,6 @@
 
 
-Cần đồng bộ tin nhắn khi trong chatRoom
+Cần đồng bộ tin nhắn trong chatRoom
 
 Focus vào item cuối của recycler view tin nhắn
 

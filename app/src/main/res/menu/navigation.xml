@@ -10,8 +10,4 @@
         android:icon="@drawable/icons8_head_profile_50"
         android:title="People" />
 
-    <item
-        android:id="@+id/navigation_stories"
-        android:icon="@drawable/icons8_storytelling_50"
-        android:title="Stories" />
 </menu>

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -18,16 +17,19 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import de.hdodenhof.circleimageview.CircleImageView
 
-class FragmentChatsPickingUserDialogAdapter(var context: Context, var list: ArrayList<Account>) : RecyclerView.Adapter<FragmentChatsPickingUserDialogAdapter.ViewHolder>() {
+class FragmentPeopleAdapter(var context: Context, var list: ArrayList<Account>)
+    : RecyclerView.Adapter<FragmentPeopleAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.fragment_chats_picking_user_dialog_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.fragment_people_item, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+//        var db: FirebaseFirestore = Firebase.firestore
 
         holder.textViewName.text = list[position].name
 
@@ -61,19 +63,18 @@ class FragmentChatsPickingUserDialogAdapter(var context: Context, var list: Arra
         }
     }
 
-
     override fun getItemCount(): Int {
         return list.size
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var imageView: ImageView
+        var imageView: CircleImageView
         var textViewName: TextView
 
         init {
-            imageView = itemView.findViewById(R.id.fragment_chats_picking_user_dialog_item_circleImageViewAvatar_item)
-            textViewName = itemView.findViewById(R.id.fragment_chats_picking_user_dialog_item_textViewName_item)
+            imageView = itemView.findViewById(R.id.fragment_people_circleImageViewAvatar_item)
+            textViewName = itemView.findViewById(R.id.fragment_people_textViewName_item)
         }
     }
 }

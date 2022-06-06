@@ -9,7 +9,6 @@ import com.example.chattingapp.R
 import com.example.chattingapp.databinding.ActivityHomeBinding
 import com.example.chattingapp.fragments.ChatsFragment
 import com.example.chattingapp.fragments.PeopleFragment
-import com.example.chattingapp.fragments.StoriesFragment
 
 class HomeActivity : AppCompatActivity() {
 
@@ -31,10 +30,6 @@ class HomeActivity : AppCompatActivity() {
                 }
                 R.id.navigation_people -> {
                     loadFragment(PeopleFragment())
-                    return@setOnItemSelectedListener true
-                }
-                R.id.navigation_stories -> {
-                    loadFragment(StoriesFragment())
                     return@setOnItemSelectedListener true
                 }
             }

@@ -1,19 +1,26 @@
 package com.example.chattingapp.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.example.chattingapp.R
 import com.example.chattingapp.adapters.ChatRoomActivityAdapter
 import com.example.chattingapp.databinding.ActivityChatRoomBinding
+import com.example.chattingapp.models.Account
 import com.example.chattingapp.models.MessageInRoom
+import com.example.chattingapp.models.Room
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 
 class ChatRoomActivity : AppCompatActivity() {
@@ -27,17 +34,20 @@ class ChatRoomActivity : AppCompatActivity() {
         viewBinding()
         listener()
 
-        val mainHandler = Handler(Looper.getMainLooper())
-        mainHandler.post(object : Runnable {
-            override fun run() {
-                getAllMessage()
-//                binding.activitiesChatRoomRecyclerViewMessage.smoothScrollToPosition(listMessage.size - 1)
-                mainHandler.postDelayed(this, 1000)
-            }
-        })
+//        val mainHandler = Handler(Looper.getMainLooper())
+//        mainHandler.post(object : Runnable {
+//            override fun run() {
+//                getAllMessage()
+////                binding.activitiesChatRoomRecyclerViewMessage.smoothScrollToPosition(listMessage.size - 1)
+//                mainHandler.postDelayed(this, 1000)
+//            }
+//        })
+
+        getAllMessage()
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getAllMessage() {
         listMessage.clear()
         val roomId: String? = intent.getStringExtra("roomId")
@@ -53,9 +63,10 @@ class ChatRoomActivity : AppCompatActivity() {
             }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun listener() {
-        binding.activitiesChatRoomCircleImageViewSend.setOnClickListener{
-            val text: String = binding.activitiesChatRoomEditTextMessage.text.toString()
+        binding.imageViewSend.setOnClickListener{
+            val text: String = binding.editTextMessage.text.toString()
             if (text.isEmpty()){
                 Toast.makeText(this, "Type something...", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -66,8 +77,11 @@ class ChatRoomActivity : AppCompatActivity() {
             doc.set(message).addOnSuccessListener {
                 listMessage.add(message)
                 chatRoomActivityAdapter.notifyDataSetChanged()
-                binding.activitiesChatRoomEditTextMessage.text.clear()
+                binding.editTextMessage.text.clear()
+                binding.editTextMessage.focusable = View.NOT_FOCUSABLE
+                binding.editTextMessage.focusable = View.FOCUSABLE
             }.addOnFailureListener {
+
             }
         }
     }
@@ -79,6 +93,36 @@ class ChatRoomActivity : AppCompatActivity() {
 
         listMessage = ArrayList()
         chatRoomActivityAdapter = ChatRoomActivityAdapter(this, listMessage)
-        binding.activitiesChatRoomRecyclerViewMessage.adapter = chatRoomActivityAdapter
+        binding.recyclerViewMessage.setHasFixedSize(true)
+        binding.recyclerViewMessage.adapter = chatRoomActivityAdapter
+        val linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.stackFromEnd = true
+        binding.recyclerViewMessage.layoutManager = linearLayoutManager
+
+        val roomId: String? = intent.getStringExtra("roomId")
+
+        Firebase.firestore.collection("Room").document(roomId!!)
+            .get().addOnCompleteListener { task ->
+                if (task.isSuccessful){
+                val room = task.result.toObject<Room>()
+
+                for (userId: String in room?.listUserId!!){
+                    if (userId != Firebase.auth.currentUser!!.uid){
+                        Firebase.firestore.collection("Account").whereEqualTo("id", userId)
+                            .get().addOnCompleteListener {
+                                if (it.isSuccessful){
+                                    val account = it.result.toObjects<Account>()
+                                    binding.textViewName.text = account[0].name
+                                    Glide.with(this).load(account[0].img_url).into(binding.circleImageViewAvatar)
+                                }
+                            }
+                    }
+                }
+
+            }
+        }
+
+
+
     }
 }

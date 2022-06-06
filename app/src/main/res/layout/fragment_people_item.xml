@@ -19,7 +19,7 @@
 
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/fragment_chats_circleImageViewAvatar_item"
+            android:id="@+id/fragment_people_circleImageViewAvatar_item"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:scaleType="centerCrop"
@@ -33,27 +33,15 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/fragment_chats_textViewName_item"
+                android:gravity="center_vertical"
+                android:id="@+id/fragment_people_textViewName_item"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:padding="5dp"
                 android:paddingTop="5dp"
                 android:text="Name"
-                android:textAlignment="textStart"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_chats_circleImageViewAvatar_item" />
-
-            <TextView
-                android:id="@+id/fragment_chats_textViewMessage_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Message"
-                android:textAlignment="textStart"
-                android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_chats_circleImageViewAvatar_item" />

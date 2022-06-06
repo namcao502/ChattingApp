@@ -14,12 +14,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/fragment_chats_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/fragment_chats_circleImageViewAvatar"
@@ -42,7 +42,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:layout_marginEnd="15dp"
-                    android:src="@drawable/icons8_edit_50" />
+                    android:background="@color/white"
+                    android:src="@drawable/icons8_plus_50" />
 
             </androidx.appcompat.widget.Toolbar>
 

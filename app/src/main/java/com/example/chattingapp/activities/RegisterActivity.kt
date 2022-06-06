@@ -20,9 +20,6 @@ class RegisterActivity : AppCompatActivity() {
         viewBinding()
         listener()
 
-        binding.editTextName.setText("nam")
-        binding.editTextUsername.setText("nam502@gmail.com")
-        binding.editTextPassword.setText("nam502")
     }
 
     private fun listener() {
@@ -74,8 +71,8 @@ class RegisterActivity : AppCompatActivity() {
             Firebase.auth.createUserWithEmailAndPassword(username, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        val account = Account(Firebase.auth.currentUser?.uid, name, username, password, "")
-                        FirebaseFirestore.getInstance().collection("Account").document().set(account)
+                        val account = Account(Firebase.auth.currentUser?.uid, name, username, password, "", "")
+                        FirebaseFirestore.getInstance().collection("Account").document(Firebase.auth.currentUser!!.uid).set(account)
                             .addOnSuccessListener {
                                 Toast.makeText(this, "Account is registered!", Toast.LENGTH_SHORT).show()
                             }

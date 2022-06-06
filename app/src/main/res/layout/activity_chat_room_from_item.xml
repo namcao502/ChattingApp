@@ -23,6 +23,7 @@
             android:src="@drawable/icons8_user_50" />
 
         <TextView
+            android:gravity="center"
             android:layout_weight="0.9"
             android:id="@+id/activity_chat_room_textViewMessage_item"
             android:layout_width="wrap_content"
@@ -38,10 +39,10 @@
             android:layout_gravity="bottom"
             android:layout_weight="0.1"
             android:id="@+id/activity_chat_room_textViewTime_item"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Time"
+            android:text="00:00"
             android:textSize="15sp" />
 
     </LinearLayout>

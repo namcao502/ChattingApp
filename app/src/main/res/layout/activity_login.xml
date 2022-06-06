@@ -15,7 +15,6 @@
         android:layout_marginTop="64dp"
         android:hint="Username"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.424"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSignIn">
 
@@ -37,7 +36,6 @@
         android:layout_marginTop="32dp"
         android:hint="Password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.423"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInputLayoutUsername">
 

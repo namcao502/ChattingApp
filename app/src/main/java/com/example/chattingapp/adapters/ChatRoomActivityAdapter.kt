@@ -1,5 +1,6 @@
 package com.example.chattingapp.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,16 +10,26 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chattingapp.R
 import com.example.chattingapp.activities.ChatRoomActivity
 import com.example.chattingapp.models.MessageInRoom
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 
-class ChatRoomActivityAdapter(var context: ChatRoomActivity, var list: ArrayList<MessageInRoom>) : RecyclerView.Adapter<ChatRoomActivityAdapter.ViewHolder>() {
+class ChatRoomActivityAdapter(var context: ChatRoomActivity, private var list: ArrayList<MessageInRoom>) : RecyclerView.Adapter<ChatRoomActivityAdapter.ViewHolder>() {
+
+    private var SEND: Int = 0
+    private var RECEIVE: Int = 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.activity_chat_room_from_item, parent, false)
-        )
+        return if (viewType == SEND){
+            val view: View = LayoutInflater.from(parent.context).inflate(R.layout.activity_chat_room_to_item, parent, false)
+            ViewHolder(view)
+        } else {
+            val view: View = LayoutInflater.from(parent.context).inflate(R.layout.activity_chat_room_from_item, parent, false)
+            ViewHolder(view)
+        }
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textViewMessage.text = list[position].content
         val simpleDateFormat = SimpleDateFormat("HH:mm")
@@ -33,7 +44,7 @@ class ChatRoomActivityAdapter(var context: ChatRoomActivity, var list: ArrayList
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var imageView: ImageView
+        private var imageView: ImageView
         var textViewTime: TextView
         var textViewMessage: TextView
 
@@ -44,4 +55,10 @@ class ChatRoomActivityAdapter(var context: ChatRoomActivity, var list: ArrayList
         }
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return if (Firebase.auth.currentUser!!.uid == list[position].userId){
+            SEND
+        } else
+            RECEIVE
+    }
 }

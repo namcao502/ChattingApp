@@ -33,18 +33,7 @@ class ChatRoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding()
         listener()
-
-//        val mainHandler = Handler(Looper.getMainLooper())
-//        mainHandler.post(object : Runnable {
-//            override fun run() {
-//                getAllMessage()
-////                binding.activitiesChatRoomRecyclerViewMessage.smoothScrollToPosition(listMessage.size - 1)
-//                mainHandler.postDelayed(this, 1000)
-//            }
-//        })
-
         getAllMessage()
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -78,8 +67,6 @@ class ChatRoomActivity : AppCompatActivity() {
                 listMessage.add(message)
                 chatRoomActivityAdapter.notifyDataSetChanged()
                 binding.editTextMessage.text.clear()
-                binding.editTextMessage.focusable = View.NOT_FOCUSABLE
-                binding.editTextMessage.focusable = View.FOCUSABLE
             }.addOnFailureListener {
 
             }
@@ -91,15 +78,16 @@ class ChatRoomActivity : AppCompatActivity() {
         val view: View = binding.root
         setContentView(view)
 
+        val roomId: String? = intent.getStringExtra("roomId")
+
         listMessage = ArrayList()
-        chatRoomActivityAdapter = ChatRoomActivityAdapter(this, listMessage)
+        chatRoomActivityAdapter = ChatRoomActivityAdapter(this, listMessage, roomId!!)
         binding.recyclerViewMessage.setHasFixedSize(true)
         binding.recyclerViewMessage.adapter = chatRoomActivityAdapter
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.stackFromEnd = true
         binding.recyclerViewMessage.layoutManager = linearLayoutManager
 
-        val roomId: String? = intent.getStringExtra("roomId")
 
         Firebase.firestore.collection("Room").document(roomId!!)
             .get().addOnCompleteListener { task ->

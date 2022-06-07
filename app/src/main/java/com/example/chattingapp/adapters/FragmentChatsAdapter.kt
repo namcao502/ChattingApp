@@ -1,5 +1,6 @@
 package com.example.chattingapp.adapters
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -30,6 +31,7 @@ class FragmentChatsAdapter(var context: Context, var list: ArrayList<Room>)
         )
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 //        var db: FirebaseFirestore = Firebase.firestore
 //        holder.textViewName.text = list[position].name
@@ -67,6 +69,7 @@ class FragmentChatsAdapter(var context: Context, var list: ArrayList<Room>)
                 Firebase.firestore.collection("Room").document(list[position].roomId!!)
                     .delete().addOnCompleteListener {
                         Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show()
+                        list.removeAt(position)
                         this.notifyDataSetChanged()
                 }
                     .addOnFailureListener {

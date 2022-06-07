@@ -120,20 +120,4 @@ class ChatsFragment : Fragment() {
             }
     }
 
-
-//    override fun onBackPressed() {
-//        val alertDialog = AlertDialog.Builder(requireContext())
-//        alertDialog.setIcon(R.drawable.icons8_storytelling_50)
-//        alertDialog.setTitle("You really want to leave me?")
-//        alertDialog.setCancelable(false)
-//
-//        alertDialog.setPositiveButton("Xoá") { dialogInterface: DialogInterface?, i: Int ->
-//
-//        }
-//        alertDialog.setNegativeButton("Không xoá nữa") { dialogInterface: DialogInterface?, i: Int ->
-//
-//        }
-//        alertDialog.show()
-//    }
-
 }

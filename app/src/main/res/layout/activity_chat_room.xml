@@ -22,6 +22,8 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:textStyle="bold"
+                android:textSize="30sp"
                 android:gravity="center_vertical"
                 android:layout_marginStart="20dp"
                 android:id="@+id/textViewName"
@@ -34,11 +36,11 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:textAlignment="center"
+        android:layout_gravity="center"
         android:layout_weight="1"
         android:id="@+id/recyclerView_message"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:padding="10dp"/>
 
     <LinearLayout
@@ -48,15 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imageViewMedia"
-            android:layout_weight="0.2"
-            android:src="@drawable/icons8_plus_50"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
-
         <EditText
-            android:layout_weight="0.6"
+            android:layout_weight="0.8"
             android:id="@+id/editTextMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

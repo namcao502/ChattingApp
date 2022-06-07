@@ -1,20 +1,28 @@
 package com.example.chattingapp.adapters
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.chattingapp.R
 import com.example.chattingapp.activities.ChatRoomActivity
+import com.example.chattingapp.models.Account
 import com.example.chattingapp.models.MessageInRoom
+import com.example.chattingapp.models.Room
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 
-class ChatRoomActivityAdapter(var context: ChatRoomActivity, private var list: ArrayList<MessageInRoom>) : RecyclerView.Adapter<ChatRoomActivityAdapter.ViewHolder>() {
+class ChatRoomActivityAdapter(var context: ChatRoomActivity, private var list: ArrayList<MessageInRoom>, var roomId: String) : RecyclerView.Adapter<ChatRoomActivityAdapter.ViewHolder>() {
 
     private var SEND: Int = 0
     private var RECEIVE: Int = 1
@@ -29,12 +37,45 @@ class ChatRoomActivityAdapter(var context: ChatRoomActivity, private var list: A
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint("SimpleDateFormat", "NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        Firebase.firestore.collection("Account").document(list[position].userId!!)
+            .get().addOnCompleteListener {
+            if (it.isSuccessful){
+                val account = it.result.toObject<Account>()
+                Glide.with(context).load(account?.img_url).into(holder.imageView)
+            }
+        }
+
         holder.textViewMessage.text = list[position].content
         val simpleDateFormat = SimpleDateFormat("HH:mm")
         val time = simpleDateFormat.format(list[position].time?.toDate()?.time)
         holder.textViewTime.text = time
+
+        holder.itemView.setOnLongClickListener {
+            val alertDialog = AlertDialog.Builder(it.rootView.context)
+            alertDialog.setIcon(R.drawable.icons8_delete_chat_50)
+            alertDialog.setTitle("You really want to delete this?")
+            alertDialog.setCancelable(false)
+
+            alertDialog.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
+                Firebase.firestore.collection("Room").document(roomId).collection("Message").document(list[position].messageId!!)
+                    .delete().addOnCompleteListener {
+                        Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show()
+                        list.removeAt(position)
+                        this.notifyDataSetChanged()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(context, "Can not delete this!", Toast.LENGTH_SHORT).show()
+                    }
+            }
+            alertDialog.setNegativeButton("No") { _: DialogInterface?, _: Int ->
+
+            }
+            alertDialog.show()
+            return@setOnLongClickListener false
+        }
     }
 
 
@@ -44,7 +85,7 @@ class ChatRoomActivityAdapter(var context: ChatRoomActivity, private var list: A
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private var imageView: ImageView
+        var imageView: ImageView
         var textViewTime: TextView
         var textViewMessage: TextView
 
@@ -61,4 +102,5 @@ class ChatRoomActivityAdapter(var context: ChatRoomActivity, private var list: A
         } else
             RECEIVE
     }
+
 }

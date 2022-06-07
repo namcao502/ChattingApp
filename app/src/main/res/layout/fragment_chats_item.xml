@@ -17,7 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/fragment_chats_circleImageViewAvatar_item"
             android:layout_width="64dp"

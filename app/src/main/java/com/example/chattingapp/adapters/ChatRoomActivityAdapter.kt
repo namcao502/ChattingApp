@@ -60,15 +60,21 @@ class ChatRoomActivityAdapter(var context: ChatRoomActivity, private var list: A
             alertDialog.setCancelable(false)
 
             alertDialog.setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
-                Firebase.firestore.collection("Room").document(roomId).collection("Message").document(list[position].messageId!!)
-                    .delete().addOnCompleteListener {
-                        Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show()
-                        list.removeAt(position)
-                        this.notifyDataSetChanged()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(context, "Can not delete this!", Toast.LENGTH_SHORT).show()
-                    }
+                if (Firebase.auth.currentUser?.uid.equals(list[position].userId)){
+                    Firebase.firestore.collection("Room").document(roomId).collection("Message").document(list[position].messageId!!)
+                        .delete().addOnCompleteListener {
+                            Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show()
+                            list.removeAt(position)
+                            this.notifyDataSetChanged()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(context, "Error!", Toast.LENGTH_SHORT).show()
+                        }
+                }
+                else {
+                    Toast.makeText(context, "You can not delete this!", Toast.LENGTH_SHORT).show()
+                }
+
             }
             alertDialog.setNegativeButton("No") { _: DialogInterface?, _: Int ->
 

@@ -2,14 +2,11 @@ package com.example.chattingapp.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.chattingapp.R
 import com.example.chattingapp.adapters.ChatRoomActivityAdapter
 import com.example.chattingapp.databinding.ActivityChatRoomBinding
 import com.example.chattingapp.models.Account
@@ -34,20 +31,27 @@ class ChatRoomActivity : AppCompatActivity() {
         viewBinding()
         listener()
         getAllMessage()
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun getAllMessage() {
-        listMessage.clear()
+
         val roomId: String? = intent.getStringExtra("roomId")
-        Firebase.firestore.collection("Room").document(roomId!!).collection("Message").orderBy("time").get()
-            .addOnSuccessListener { documents ->
-                if (documents != null){
-                    for (document in documents){
-                        val message: MessageInRoom = document.toObject()
-                        listMessage.add(message)
+
+        //realtime update message
+        Firebase.firestore.collection("Room").document(roomId!!).collection("Message").orderBy("time")
+            .addSnapshotListener{ documents, _ ->
+                run {
+                    if (documents != null) {
+                        listMessage.clear()
+                        for (document in documents) {
+                            val message: MessageInRoom = document.toObject()
+                            listMessage.add(message)
+                        }
+                        binding.recyclerViewMessage.scrollToPosition(listMessage.size - 1)
+                        chatRoomActivityAdapter.notifyDataSetChanged()
                     }
-                    chatRoomActivityAdapter.notifyDataSetChanged()
                 }
             }
     }
@@ -64,8 +68,6 @@ class ChatRoomActivity : AppCompatActivity() {
             val doc: DocumentReference = Firebase.firestore.collection("Room").document(roomId!!).collection("Message").document()
             val message = MessageInRoom(doc.id, Firebase.auth.currentUser?.uid, text, Timestamp.now())
             doc.set(message).addOnSuccessListener {
-                listMessage.add(message)
-                chatRoomActivityAdapter.notifyDataSetChanged()
                 binding.editTextMessage.text.clear()
             }.addOnFailureListener {
 
@@ -73,6 +75,7 @@ class ChatRoomActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun viewBinding(){
         binding = ActivityChatRoomBinding.inflate(layoutInflater)
         val view: View = binding.root
@@ -80,20 +83,19 @@ class ChatRoomActivity : AppCompatActivity() {
 
         val roomId: String? = intent.getStringExtra("roomId")
 
+        //set up recyclerView
         listMessage = ArrayList()
         chatRoomActivityAdapter = ChatRoomActivityAdapter(this, listMessage, roomId!!)
         binding.recyclerViewMessage.setHasFixedSize(true)
         binding.recyclerViewMessage.adapter = chatRoomActivityAdapter
         val linearLayoutManager = LinearLayoutManager(this)
-        linearLayoutManager.stackFromEnd = true
         binding.recyclerViewMessage.layoutManager = linearLayoutManager
 
-
-        Firebase.firestore.collection("Room").document(roomId!!)
+        //load receiver avatar
+        Firebase.firestore.collection("Room").document(roomId)
             .get().addOnCompleteListener { task ->
                 if (task.isSuccessful){
                 val room = task.result.toObject<Room>()
-
                 for (userId: String in room?.listUserId!!){
                     if (userId != Firebase.auth.currentUser!!.uid){
                         Firebase.firestore.collection("Account").whereEqualTo("id", userId)
@@ -109,8 +111,5 @@ class ChatRoomActivity : AppCompatActivity() {
 
             }
         }
-
-
-
     }
 }

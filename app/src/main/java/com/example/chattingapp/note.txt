@@ -3,4 +3,4 @@ không cho tạo room trùng
 
 thêm thông báo khi có tin nhắn mới
 
-khi xoá chat thì cập nhật ngay
+

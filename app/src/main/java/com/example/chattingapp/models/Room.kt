@@ -1,6 +1,7 @@
 package com.example.chattingapp.models
 
 class Room(
+    var lastMessage: String? = "",
     var roomId: String? = "",
     var name: String? = "",
     var listUserId: ArrayList<String>? = null

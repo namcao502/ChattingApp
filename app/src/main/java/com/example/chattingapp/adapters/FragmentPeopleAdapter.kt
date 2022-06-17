@@ -48,7 +48,7 @@ class FragmentPeopleAdapter(var context: Context, var list: ArrayList<Account>)
             listUser.add(Firebase.auth.currentUser!!.uid)
             listUser.add(list[position].id!!)
 
-            val room = Room(doc.id, list[position].name, listUser)
+            val room = Room("", doc.id, list[position].name, listUser)
 
             doc.set(room).addOnSuccessListener {
                 //go to chat room

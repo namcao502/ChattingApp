@@ -17,10 +17,13 @@ import com.example.chattingapp.activities.UserActivity
 import com.example.chattingapp.adapters.FragmentChatsAdapter
 import com.example.chattingapp.adapters.FragmentChatsPickingUserDialogAdapter
 import com.example.chattingapp.models.Account
+import com.example.chattingapp.models.MessageInRoom
 import com.example.chattingapp.models.Room
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -105,7 +108,8 @@ class ChatsFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun getAllRoomForCurrentUser(){
         listRoom.clear()
-        Firebase.firestore.collection("Room").whereArrayContains("listUserId", Firebase.auth.currentUser!!.uid)
+        Firebase.firestore.collection("Room")
+            .whereArrayContains("listUserId", Firebase.auth.currentUser!!.uid)
             .get().addOnSuccessListener { documents ->
                 if (documents != null) {
                     for (document in documents) {

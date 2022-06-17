@@ -31,7 +31,6 @@ class ChatRoomActivity : AppCompatActivity() {
         viewBinding()
         listener()
         getAllMessage()
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -58,6 +57,7 @@ class ChatRoomActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun listener() {
+
         binding.imageViewSend.setOnClickListener{
             val text: String = binding.editTextMessage.text.toString()
             if (text.isEmpty()){
@@ -68,7 +68,12 @@ class ChatRoomActivity : AppCompatActivity() {
             val doc: DocumentReference = Firebase.firestore.collection("Room").document(roomId!!).collection("Message").document()
             val message = MessageInRoom(doc.id, Firebase.auth.currentUser?.uid, text, Timestamp.now())
             doc.set(message).addOnSuccessListener {
-                binding.editTextMessage.text.clear()
+
+                Firebase.firestore.collection("Room").document(roomId).update("lastMessage", message.content)
+                    .addOnCompleteListener {
+                        binding.editTextMessage.text.clear()
+                }
+
             }.addOnFailureListener {
 
             }
@@ -108,7 +113,6 @@ class ChatRoomActivity : AppCompatActivity() {
                             }
                     }
                 }
-
             }
         }
     }

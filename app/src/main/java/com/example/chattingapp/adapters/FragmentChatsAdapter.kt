@@ -35,6 +35,7 @@ class FragmentChatsAdapter(var context: Context, var list: ArrayList<Room>)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 //        var db: FirebaseFirestore = Firebase.firestore
 //        holder.textViewName.text = list[position].name
+        holder.textViewMessage.text = list[position].lastMessage
 
         for (userId: String in list[position].listUserId!!){
             if (userId != Firebase.auth.currentUser!!.uid){

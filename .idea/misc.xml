@@ -11,7 +11,7 @@
         <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/activity_change_password.xml" value="0.1" />
         <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/activity_chat_room.xml" value="0.25" />
         <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/activity_chat_room_from_item.xml" value="0.264" />
-        <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/activity_chat_room_to_item.xml" value="0.264" />
+        <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/activity_chat_room_to_item.xml" value="0.4" />
         <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />
         <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/activity_register.xml" value="0.25" />
@@ -19,7 +19,7 @@
         <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/fragment_chats.xml" value="0.25" />
         <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/fragment_chats_item.xml" value="0.25" />
         <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/fragment_chats_picking_user_dialog.xml" value="0.10092592592592593" />
-        <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/fragment_chats_picking_user_dialog_item.xml" value="0.10092592592592593" />
+        <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/fragment_chats_picking_user_dialog_item.xml" value="0.2" />
         <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/fragment_people.xml" value="0.25" />
         <entry key="..\:/~project/Android Kotlin/ChattingApp/app/src/main/res/layout/fragment_people_item.xml" value="0.25" />
         <entry key="..\:/~project/Android_Kotlin/ChattingApp/app/src/main/res/drawable-v24/gradient_item_background.xml" value="0.1535" />

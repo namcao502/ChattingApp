@@ -7,32 +7,50 @@
     android:layout_height="64dp"
     android:layout_margin="5dp"
     android:padding="10dp"
-    app:cardCornerRadius="10dp"
-    android:layout_gravity="end">
+    app:cardCornerRadius="40dp">
 
     <LinearLayout
-        android:layout_gravity="end"
-        android:background="@drawable/gradient_item_background"
         android:weightSum="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
-            android:layout_gravity="bottom"
-            android:layout_weight="0.05"
-            android:id="@+id/activity_chat_room_textViewTime_item"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="00:00"
-            android:textSize="15sp" />
+            <TextView
+                android:textAlignment="viewEnd"
+                android:layout_gravity="bottom"
+                android:layout_weight="0.05"
+                android:id="@+id/activity_chat_room_textViewDate_item"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Feb 7"
+                android:textSize="15sp"
+                tools:ignore="RtlCompat" />
+
+
+            <TextView
+                android:textAlignment="viewEnd"
+                android:layout_gravity="bottom"
+                android:layout_weight="0.05"
+                android:id="@+id/activity_chat_room_textViewTime_item"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="00:00"
+                android:textSize="15sp"
+                tools:ignore="RtlCompat" />
+
+        </LinearLayout>
 
         <TextView
             android:textAlignment="viewEnd"
             android:gravity="center_vertical"
-            android:layout_weight="0.95"
+            android:layout_weight="1"
             android:id="@+id/activity_chat_room_textViewMessage_item"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

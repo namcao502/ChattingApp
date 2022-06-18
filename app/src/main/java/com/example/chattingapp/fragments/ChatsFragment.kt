@@ -107,20 +107,36 @@ class ChatsFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun getAllRoomForCurrentUser(){
+//        listRoom.clear()
+//        Firebase.firestore.collection("Room")
+//            .whereArrayContains("listUserId", Firebase.auth.currentUser!!.uid)
+//            .get().addOnSuccessListener { documents ->
+//                if (documents != null) {
+//                    for (document in documents) {
+//                        val room: Room = document.toObject()
+//                        listRoom.add(room)
+//                    }
+//                    fragmentChatsAdapter.notifyDataSetChanged()
+//                }
+//            }
+//            .addOnFailureListener {
+//                Toast.makeText(requireContext(), "Can not connect!", Toast.LENGTH_SHORT).show()
+//            }
+
         listRoom.clear()
         Firebase.firestore.collection("Room")
             .whereArrayContains("listUserId", Firebase.auth.currentUser!!.uid)
-            .get().addOnSuccessListener { documents ->
-                if (documents != null) {
-                    for (document in documents) {
-                        val room: Room = document.toObject()
-                        listRoom.add(room)
+            .addSnapshotListener { documents, _ ->
+                run {
+                    listRoom.clear()
+                    if (documents != null) {
+                        for (document in documents) {
+                            val room: Room = document.toObject()
+                            listRoom.add(room)
+                        }
+                        fragmentChatsAdapter.notifyDataSetChanged()
                     }
-                    fragmentChatsAdapter.notifyDataSetChanged()
                 }
-            }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(), "Can not connect!", Toast.LENGTH_SHORT).show()
             }
     }
 

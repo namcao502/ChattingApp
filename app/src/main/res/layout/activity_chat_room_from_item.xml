@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:padding="10dp"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="40dp">
 
     <LinearLayout
         android:background="@drawable/gradient_item_background"
@@ -25,7 +25,7 @@
 
         <TextView
             android:gravity="center_vertical"
-            android:layout_weight="0.9"
+            android:layout_weight="1"
             android:id="@+id/activity_chat_room_textViewMessage_item"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -35,17 +35,37 @@
             android:textSize="15sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:textAlignment="viewEnd"
-            android:layout_gravity="bottom"
-            android:layout_weight="0.1"
-            android:id="@+id/activity_chat_room_textViewTime_item"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="00:00"
-            android:textSize="15sp"
-            tools:ignore="RtlCompat" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textAlignment="viewStart"
+                android:layout_gravity="bottom"
+                android:layout_weight="0.05"
+                android:id="@+id/activity_chat_room_textViewDate_item"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Feb 7"
+                android:textSize="15sp"
+                tools:ignore="RtlCompat" />
+
+
+            <TextView
+                android:textAlignment="viewStart"
+                android:layout_gravity="bottom"
+                android:layout_weight="0.05"
+                android:id="@+id/activity_chat_room_textViewTime_item"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="00:00"
+                android:textSize="15sp"
+                tools:ignore="RtlCompat" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

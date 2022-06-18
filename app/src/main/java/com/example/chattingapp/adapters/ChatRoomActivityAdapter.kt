@@ -49,9 +49,15 @@ class ChatRoomActivityAdapter(var context: ChatRoomActivity, private var list: A
         }
 
         holder.textViewMessage.text = list[position].content
-        val simpleDateFormat = SimpleDateFormat("HH:mm")
-        val time = simpleDateFormat.format(list[position].time?.toDate()?.time)
+
+        val simpleTimeFormat = SimpleDateFormat("HH:mm")
+        val time = simpleTimeFormat.format(list[position].time?.toDate()?.time)
         holder.textViewTime.text = time
+
+        val simpleDateFormat = SimpleDateFormat("MMM dd")
+        val date = simpleDateFormat.format(list[position].time?.toDate()!!)
+        holder.textViewDate.text = date
+
 
         holder.itemView.setOnLongClickListener {
             val alertDialog = AlertDialog.Builder(it.rootView.context)
@@ -93,11 +99,13 @@ class ChatRoomActivityAdapter(var context: ChatRoomActivity, private var list: A
 
         var imageView: ImageView
         var textViewTime: TextView
+        var textViewDate: TextView
         var textViewMessage: TextView
 
         init {
             imageView = itemView.findViewById(R.id.activity_chat_room_circleImageViewAvatar_item)
             textViewTime = itemView.findViewById(R.id.activity_chat_room_textViewTime_item)
+            textViewDate = itemView.findViewById(R.id.activity_chat_room_textViewDate_item)
             textViewMessage = itemView.findViewById(R.id.activity_chat_room_textViewMessage_item)
         }
     }

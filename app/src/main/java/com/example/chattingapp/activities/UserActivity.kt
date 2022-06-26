@@ -90,7 +90,12 @@ class UserActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
                 Firebase.auth.currentUser!!.updatePassword(password).addOnCompleteListener {
-                    Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show()
+
+                    Firebase.firestore.collection("Account").document(Firebase.auth.currentUser!!.uid)
+                        .update("password", password).addOnCompleteListener {
+                            Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show()
+                        }
+
                 }.addOnFailureListener {
                     Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show()
                 }
@@ -163,7 +168,7 @@ class UserActivity : AppCompatActivity() {
                     }
                     Toast.makeText(this@UserActivity, "Uploaded", Toast.LENGTH_SHORT).show()
                 }
-                .addOnFailureListener { e ->
+                .addOnFailureListener {
                     progressDialog.dismiss()
                     Toast.makeText(this@UserActivity,"Failed ", Toast.LENGTH_SHORT).show()
                 }

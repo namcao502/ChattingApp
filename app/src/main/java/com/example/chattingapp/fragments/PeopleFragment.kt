@@ -26,6 +26,7 @@ class PeopleFragment : Fragment() {
     lateinit var fragmentPeopleAdapter: FragmentPeopleAdapter
 
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_people, container, false)
@@ -39,6 +40,25 @@ class PeopleFragment : Fragment() {
 
         loadAllPeople()
 
+        buttonSearch.setOnClickListener {
+            listPeople.clear()
+            val text: String = editTextSearch.text.toString()
+            if (text.isEmpty()){
+                Toast.makeText(requireContext(), "Please type a name to find", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            Firebase.firestore.collection("Account").whereEqualTo("name", text).get().addOnCompleteListener {
+                if (it.isSuccessful){
+                    for (document in it.result){
+                        val account: Account = document.toObject()
+                        listPeople.add(account)
+                    }
+                    fragmentPeopleAdapter.notifyDataSetChanged()
+                }
+            }.addOnFailureListener {
+                Toast.makeText(requireContext(), "Sorry, $text is not here", Toast.LENGTH_SHORT).show()
+            }
+        }
         return view
     }
 

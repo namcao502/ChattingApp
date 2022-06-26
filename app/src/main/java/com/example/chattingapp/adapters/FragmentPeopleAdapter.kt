@@ -42,24 +42,37 @@ class FragmentPeopleAdapter(var context: Context, var list: ArrayList<Account>)
 
         holder.itemView.setOnClickListener {
             //create a new room
-            val doc: DocumentReference = Firebase.firestore.collection("Room").document()
 
             val listUser: ArrayList<String> = ArrayList()
             listUser.add(Firebase.auth.currentUser!!.uid)
             listUser.add(list[position].id!!)
 
-            val room = Room("", doc.id, list[position].name, listUser)
+            Firebase.firestore.collection("Room").whereEqualTo("listUserId", listUser).get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful){
+                        for (document in it.result){
+                            val intent = Intent(context, ChatRoomActivity::class.java)
+                            intent.putExtra("roomId", document.id)
+                            context.startActivity(intent)
+                            return@addOnCompleteListener
+                        }
+                    }
+                }
+                .addOnFailureListener {
+                    val doc: DocumentReference = Firebase.firestore.collection("Room").document()
+                    val room = Room("", doc.id, list[position].name, listUser)
 
-            doc.set(room).addOnSuccessListener {
-                //go to chat room
-                val intent = Intent(context, ChatRoomActivity::class.java)
-                intent.putExtra("roomId", doc.id)
-                context.startActivity(intent)
-                Toast.makeText(context, "Created a chat!", Toast.LENGTH_SHORT).show()
+                    doc.set(room).addOnSuccessListener {
+                        //go to chat room
+                        val intent = Intent(context, ChatRoomActivity::class.java)
+                        intent.putExtra("roomId", doc.id)
+                        context.startActivity(intent)
+                        Toast.makeText(context, "Created a chat!", Toast.LENGTH_SHORT).show()
 
-            }.addOnFailureListener {
-                Toast.makeText(context, "Can not create a chat!", Toast.LENGTH_SHORT).show()
-            }
+                    }.addOnFailureListener {
+                        Toast.makeText(context, "Can not create a chat!", Toast.LENGTH_SHORT).show()
+                    }
+                }
         }
     }
 

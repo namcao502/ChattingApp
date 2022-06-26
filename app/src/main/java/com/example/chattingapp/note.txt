@@ -1,6 +1,10 @@
 
 không cho tạo room trùng
+nếu có sẵn room thì nhảy đến room đó
+nếu không thì tạo như bình thường
 
 thêm thông báo khi có tin nhắn mới
+
+
 
 
